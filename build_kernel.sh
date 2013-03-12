@@ -33,7 +33,7 @@ rm -rf $RAMFS_TMP/.hg
 #copy modules into ramfs
 mkdir -p $RAMFS_TMP/lib/modules
 find -name '*.ko' -exec cp -av {} $RAMFS_TMP/lib/modules/ \;
-/home/bsquare/cyanogenmod10/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi-strip --strip-unneeded $RAMFS_TMP/lib/modules/*
+/home/bsquare/android-toolchain-eabi/bin/arm-eabi-strip --strip-unneeded $RAMFS_TMP/lib/modules/*
 
 echo ".............................................................Building new ramdisk............................................................."
 cd $RAMFS_TMP
