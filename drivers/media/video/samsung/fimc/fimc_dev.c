@@ -626,11 +626,16 @@ static inline void fimc_irq_cap(struct fimc_control *ctrl)
 		}
 
 		fimc_add_outgoing_queue(ctrl, buf_index);
+		spin_lock(&ctrl->inq_lock);
+
 		fimc_hwset_output_buf_sequence(ctrl, buf_index,
 				FIMC_FRAMECNT_SEQ_DISABLE);
 
 		framecnt_seq = fimc_hwget_output_buf_sequence(ctrl);
 		available_bufnum = fimc_hwget_number_of_bits(framecnt_seq);
+
+		spin_unlock(&ctrl->inq_lock);
+
 		fimc_info2("%s[%d] : framecnt_seq: %d, available_bufnum: %d\n",
 			__func__, ctrl->id, framecnt_seq, available_bufnum);
 		if (ctrl->status != FIMC_BUFFER_STOP) {
@@ -777,6 +782,8 @@ static struct fimc_control *fimc_register_controller(struct platform_device *pde
 	mutex_init(&ctrl->lock);
 	mutex_init(&ctrl->v4l2_lock);
 	spin_lock_init(&ctrl->outq_lock);
+	spin_lock_init(&ctrl->inq_lock);
+
 	init_waitqueue_head(&ctrl->wq);
 
 	/* get resource for io memory */
@@ -1579,7 +1586,7 @@ static int fimc_release(struct file *filp)
 	struct fimc_ctx *ctx;
 	int ret = 0, i;
 #if (defined(CONFIG_EXYNOS_DEV_PD) && defined(CONFIG_PM_RUNTIME))
-	struct platform_device *pdev = to_platform_device(ctrl->dev);
+	//struct platform_device *pdev = to_platform_device(ctrl->dev);
 #endif
 
 	ctx = &ctrl->out->ctx[ctx_id];
