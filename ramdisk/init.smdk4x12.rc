@@ -74,14 +74,6 @@ on post-fs-data
     chown system root /data/.psm.info
     chmod 0660 /data/.psm.info
 
-    # for WIFI module
-    write /data/.cid.info 0
-    chown system root /data/.cid.info
-    chmod 0664 /data/.cid.info
-    write /data/.rev 0
-    chown system root /data/.rev
-    chmod 0660 /data/.rev
-
 on boot
 # SISO-ANDR_PERF :: START Changing scheduler to noop during boot
     write /sys/block/mmcblk0/queue/scheduler noop
@@ -439,6 +431,13 @@ service wlandutservice /system/bin/wlandutservice
 service macloader /system/bin/macloader
 	class main
 	oneshot
+
+on property:init.svc.macloader=stopped
+    chown system root /data/.cid.info
+    chmod 0664 /data/.cid.info
+    chown system root /data/.rev
+    chmod 0660 /data/.rev
+
 # end of wifi
 
 # preload directory mount setting
