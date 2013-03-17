@@ -2726,14 +2726,14 @@ static void __init exynos4_reserve_mem(void)
 		{
 			.name = "ion",
 			.size = CONFIG_ION_EXYNOS_CONTIGHEAP_SIZE * SZ_1K,
-			.start = 0x53A00000,
+			.start = 0x53500000,
 		},
 #endif
 #ifdef CONFIG_VIDEO_SAMSUNG_MEMSIZE_MFC_SECURE
 		{
 			.name = "mfc-secure",
 			.size = CONFIG_VIDEO_SAMSUNG_MEMSIZE_MFC_SECURE * SZ_1K,
-			.start = 0x50900000,
+			.start = 0x50400000,
 		},
 #endif
 		{
