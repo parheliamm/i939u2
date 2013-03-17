@@ -2242,6 +2242,14 @@ static int host_port_enable(int port, int enable)
 		}
 
 #if !defined(CONFIG_MACH_GRANDE) && !defined(CONFIG_MACH_M0_DUOSCTC)
+		/*add gpio request to fix the warnings...*/
+		err = gpio_request(GPIO_USB_BOOT_EN , "GPIO_USB_BOOT_EN");
+		if (err < 0)
+			pr_err("gpio request %s failed","GPIO_USB_BOOT_EN");
+		err = gpio_request(GPIO_BOOT_SW_SEL,"GPIO_BOOT_SW_SEL");
+		if (err < 0)
+			pr_err("gpio request %s failed","GPIO_BOOT_SW_SEL");
+
 		gpio_direction_output(GPIO_USB_BOOT_EN, 0);
 		s3c_gpio_setpull(GPIO_USB_BOOT_EN, S3C_GPIO_PULL_NONE);
 		gpio_set_value(GPIO_USB_BOOT_EN, 0);
