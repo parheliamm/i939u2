@@ -1900,12 +1900,12 @@ static __devinit int max77693_charger_probe(struct platform_device *pdev)
 	INIT_DELAYED_WORK(&chg_data->softreg_work, max77693_softreg_work);
 	INIT_DELAYED_WORK(&chg_data->recovery_work, max77693_recovery_work);
 
-	chg_data->charger.name = "max77693-charger",
-	chg_data->charger.type = POWER_SUPPLY_TYPE_BATTERY,
-	chg_data->charger.properties = max77693_charger_props,
-	chg_data->charger.num_properties = ARRAY_SIZE(max77693_charger_props),
-	chg_data->charger.get_property = max77693_charger_get_property,
-	chg_data->charger.set_property = max77693_charger_set_property,
+	chg_data->charger.name = "max77693-charger";
+	chg_data->charger.type = POWER_SUPPLY_TYPE_BATTERY;
+	chg_data->charger.properties = max77693_charger_props;
+	chg_data->charger.num_properties = ARRAY_SIZE(max77693_charger_props);
+	chg_data->charger.get_property = max77693_charger_get_property;
+	chg_data->charger.set_property = max77693_charger_set_property;
 
 	ret = power_supply_register(&pdev->dev, &chg_data->charger);
 	if (ret) {
